@@ -90,5 +90,32 @@ decifra_str = decifra.to_bytes((decifra.bit_length() + 7) // 8, "big").decode()
 print(decifra_str)
 
 
+xd = int("10100101", 5)
+print(xd)
+print(ord("a"))
 
+
+# esempio usando "little"
+# op1
+def S2N(s: str):
+    tot = 0
+    esp = 0
+
+    for c in s:
+        tot = tot + 256 ** esp * ord(c)
+        esp = esp + 1
+    
+    return tot
+
+print(f"{s} in decimale è: {S2N(s)}")
+
+
+#op2
+
+def S2Ne(s):
+    tot = 0
+    for c in s[::-1]:
+        tot = (tot << 8) | ord(c)
+    return tot
+print(f"{s} in decimale è: {S2N(s)}")
 
