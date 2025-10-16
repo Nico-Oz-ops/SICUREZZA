@@ -95,14 +95,37 @@ print(xd)
 print(ord("a"))
 
 
-# esempio usando "little"
-# op1
+# Versione fatta in classe
+# ordinamento big
+numero=8735 
+with open("numero.txt", "wb") as f:
+    '''wb = write in binary (in linux non c'è differenza \n mentre in 
+    Windows si \n\n quindi in binario ci sarebbero due caratteri mentre 
+    in modalità testuale ci pensa Windows)'''
+    f.write(numero.to_bytes(4, byteorder="big"))
+
+
+# ordinamento little
+numero = 8735
+with open("numero2.txt", "wb") as f:
+    f.write(numero.to_bytes(4, byteorder="little"))
+ 
+
+s = "Ciao come stai"
+with open("numero3.txt", "w") as f:
+    f.write(s)
+
+
+# Converto la lista in numero intero
+
+# op1 - "little"
 def S2N(s: str):
     tot = 0
     esp = 0
 
     for c in s:
-        tot = tot + 256 ** esp * ord(c)
+        tot = tot + 256 ** esp * ord(c) # Ogni carattere viene spostato di 8 bit (1 byte) rispetto al precedente.
+                                        # Quindi "esp" controlla la posizione del byte all’interno del numero.
         esp = esp + 1
     
     return tot
@@ -110,8 +133,7 @@ def S2N(s: str):
 print(f"{s} in decimale è: {S2N(s)}")
 
 
-#op2
-
+#op2 - "little"
 def S2Ne(s):
     tot = 0
     for c in s[::-1]:
@@ -119,3 +141,41 @@ def S2Ne(s):
     return tot
 print(f"{s} in decimale è: {S2N(s)}")
 
+
+# op1 - "big"
+def S2N(s: str):
+    tot = 0
+    esp = 0
+
+    for c in s[::-1]: # parte dall'ultimo carattere
+        tot = tot + 256 ** esp * ord(c)
+        esp = esp + 1
+    
+    return tot
+
+print(f"{s} in decimale è: {S2N(s)}")
+
+#op2 - "big"
+def S2Ne(s):
+    tot = 0
+    for c in s:
+        tot = (tot << 8) | ord(c)
+    return tot
+print(f"{s} in decimale è: {S2N(s)}")
+
+
+# Riconvertire il numero intero in stringa - "big"
+def n2s(n):
+    chars = []
+    while n > 0:
+        chars.append(chr(n % 256))
+        n //= 256
+    return ''.join(chars[::-1])
+
+# Riconvertire il numero intero in stringa - "little"
+def n2s(n):
+    chars = []
+    while n > 0:
+        chars.append(chr(n % 256))
+        n //= 256
+    return ''.join(chars)

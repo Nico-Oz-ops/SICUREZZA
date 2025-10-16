@@ -49,7 +49,6 @@ def diffie_hellman_demo():
     print(f"Chiave segreta calcolata da Alice: {segreto_alice}")
     print(f"Chiave segreta calcolata da Bob: {segreto_bob}")
 
-
     # Verificare che le due chiavi coincidano
     if segreto_alice == segreto_bob:
         print(f"Scambio riuscito! Chiave condivisa: {segreto_alice}")
